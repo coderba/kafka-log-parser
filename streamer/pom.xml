@@ -8,6 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+
     <groupId>com.idea</groupId>
     <artifactId>log_streamer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
