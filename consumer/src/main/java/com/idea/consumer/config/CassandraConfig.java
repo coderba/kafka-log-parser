@@ -2,13 +2,11 @@ package com.idea.consumer.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
-@EnableCassandraRepositories(basePackages = "com.idea.consumer")
+@EnableCassandraRepositories(basePackages = "com.idea.consumer.repository")
 @Configuration
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
@@ -50,7 +48,8 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     }
 
     @Override
-    protected boolean getMetricsEnabled() { return false; }
-
+    protected boolean getMetricsEnabled() {
+        return false;
+    }
 
 }

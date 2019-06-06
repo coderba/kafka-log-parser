@@ -1,8 +1,12 @@
 package com.idea.consumer.service;
 
+import com.datastax.driver.core.utils.UUIDs;
 import com.idea.consumer.Util.City;
+import com.idea.consumer.entity.Report;
+import com.idea.consumer.repository.ReportRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
@@ -12,6 +16,9 @@ import java.util.HashMap;
 @Service
 public class Receiver {
 
+    @Autowired
+    ReportRepository reportRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(Receiver.class);
     private static HashMap<City, Long> cityLongHashMap = new HashMap<>();
 
@@ -19,6 +26,8 @@ public class Receiver {
     public void listen(@Payload String message) {
         logger.info("received message='{}'", message);
         parseMessage(message);
+
+        reportRepository.save(new Report(UUIDs.timeBased(), "Istanbul", "1"));
     }
 
     private HashMap<City, Long> parseMessage(String splitValue) {
