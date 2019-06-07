@@ -1,26 +1,21 @@
 package com.idea.consumer.entity;
 
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.util.UUID;
+import static org.springframework.data.cassandra.core.cql.PrimaryKeyType.PARTITIONED;
 
 @Table(value = "report")
 public class Report {
 
-    @PrimaryKeyColumn(name = "ID", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-    private UUID ID;
-
-    @Column()
+    @PrimaryKeyColumn(name = "key", type = PARTITIONED)
     private String key;
 
     @Column()
-    private String value;
+    private long value;
 
-    public Report(UUID ID, String key, String value) {
-        this.ID = ID;
+    public Report(String key, long value) {
         this.key = key;
         this.value = value;
     }
@@ -36,11 +31,11 @@ public class Report {
         this.key = key;
     }
 
-    public String getValue() {
+    public long getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(long value) {
         this.value = value;
     }
 }

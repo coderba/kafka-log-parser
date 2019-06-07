@@ -1,19 +1,18 @@
 package com.idea.producer.schedule;
 
-import com.idea.producer.util.FileTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 @Component
 public class Sender {
-
     private static final Logger logger = LoggerFactory.getLogger(Sender.class);
 
     @Autowired
@@ -24,13 +23,26 @@ public class Sender {
 
     public void send(String message) {
         logger.info("sending message='{}' to topic='{}'", message, topic);
-        kafkaTemplate.send(topic, "hello world");
+        kafkaTemplate.send(topic, message);
     }
 
-    @Scheduled(fixedDelay = 200)
+    @PostConstruct
     public void read() {
-        List<String> list = new FileTool().read("/Users/cembasarbaskan/Desktop/test/log4j2-demo.log");
-        logger.info("sending message='{}' to topic='{}'", list.get(list.size() - 1), topic);
-        kafkaTemplate.send(topic, list.get(list.size() - 1));
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(
+                    "/Users/cembasarbaskan/Desktop/test/log4j2-demo.log"));
+            String line;
+
+            while (true) {
+                line = reader.readLine();
+                if (line == null) {
+                    Thread.sleep(200);
+                } else {
+                    send(line);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("[read]", e);
+        }
     }
 }
