@@ -41,7 +41,6 @@ public class StreamSchedular {
 
     private void logAndSleep(Level logLevel, String city, String message) throws InterruptedException {
         logger.log(logLevel, city + " " + message);
-        new Thread().sleep(SLEEP_TIME);
     }
 
 }
