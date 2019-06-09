@@ -8,38 +8,36 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import static com.idea.producer.config.Constants.SLEEP_TIME;
-
 @Component
 public class StreamSchedular {
     private static Logger logger = LogManager.getLogger(StreamSchedular.class);
 
-    @Scheduled(fixedDelay = 503)
-    private void logStreamer() throws InterruptedException {
+    @Scheduled(fixedDelay = 3 * 1000, initialDelay = 1000)
+    private void logStreamer() {
         while (true) {
             if (new Date().getTime() % 2 == 0) {
-                logAndSleep(Level.INFO, "Istanbul", "hello-from-Istanbul");
+                doLog(Level.INFO, "Istanbul", "hello-from-Istanbul");
             }
 
             if (new Date().getTime() % 3 == 0) {
-                logAndSleep(Level.WARN, "Tokyo", "hello-from-Tokyo");
+                doLog(Level.WARN, "Tokyo", "hello-from-Tokyo");
             }
 
             if (new Date().getTime() % 5 == 0) {
-                logAndSleep(Level.FATAL, "Moskow", "hello-from-Moskow");
+                doLog(Level.FATAL, "Moskow", "hello-from-Moskow");
             }
 
             if (new Date().getTime() % 7 == 0) {
-                logAndSleep(Level.DEBUG, "Beijing", "hello-from-Beijing");
+                doLog(Level.DEBUG, "Beijing", "hello-from-Beijing");
             }
 
             if (new Date().getTime() % 11 == 0) {
-                logAndSleep(Level.ERROR, "London", "hello-from-London");
+                doLog(Level.ERROR, "London", "hello-from-London");
             }
         }
     }
 
-    private void logAndSleep(Level logLevel, String city, String message) throws InterruptedException {
+    private void doLog(Level logLevel, String city, String message){
         logger.log(logLevel, city + " " + message);
     }
 

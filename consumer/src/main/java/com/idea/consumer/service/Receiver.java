@@ -19,26 +19,25 @@ import java.util.Map;
 
 @Service
 public class Receiver {
+    private static final Logger logger = LoggerFactory.getLogger(Receiver.class);
+    private static HashMap<City, Long> cityLongHashMap = new HashMap<>();
 
     @Autowired
     private CassandraOperations cassandraTemplate;
 
-
     @Autowired
-    SimpMessagingTemplate template;
+    private SimpMessagingTemplate template;
 
-    private static final Logger logger = LoggerFactory.getLogger(Receiver.class);
-    private static HashMap<City, Long> cityLongHashMap = new HashMap<>();
 
     @KafkaListener(topics = "${app.topic}")
     public void listen(@Payload String message) {
         logger.info("received message='{}'", message);
-        template.convertAndSend("/topic/temperature", message);
+        parseMessage(message);
+        template.convertAndSend("/topic/incomingLogs", message);
     }
 
 
-    //    @Scheduled(fixedDelay = 5 * 60 * 1000)
-    @Scheduled(fixedDelay = 2 * 1000)
+    @Scheduled(fixedDelay = 5 * 1000, initialDelay = 1000)
     private void dbOperation() {
         for (Map.Entry<City, Long> entry : cityLongHashMap.entrySet()) {
             City key = entry.getKey();
@@ -67,6 +66,45 @@ public class Receiver {
             }
         } catch (Exception e) {
             logger.error("[listen]", e);
+        }
+    }
+
+    private String parseMessage(String message) {
+        if (message.contains(City.ISTANBUL.toString())) {
+            if (cityLongHashMap.containsKey(City.ISTANBUL)) {
+                cityLongHashMap.put(City.ISTANBUL, cityLongHashMap.get(City.ISTANBUL) + 1);
+            } else {
+                cityLongHashMap.put(City.ISTANBUL, 1l);
+            }
+            return City.ISTANBUL.toString();
+        } else if (message.contains(City.BEIJING.toString())) {
+            if (cityLongHashMap.containsKey(City.BEIJING)) {
+                cityLongHashMap.put(City.BEIJING, cityLongHashMap.get(City.BEIJING) + 1);
+            } else {
+                cityLongHashMap.put(City.BEIJING, 1l);
+            }
+            return City.BEIJING.toString();
+        } else if (message.contains(City.MOSKOW.toString())) {
+            if (cityLongHashMap.containsKey(City.MOSKOW)) {
+                cityLongHashMap.put(City.MOSKOW, cityLongHashMap.get(City.MOSKOW) + 1);
+            } else {
+                cityLongHashMap.put(City.MOSKOW, 1l);
+            }
+            return City.MOSKOW.toString();
+        } else if (message.contains(City.TOKYO.toString())) {
+            if (cityLongHashMap.containsKey(City.TOKYO)) {
+                cityLongHashMap.put(City.TOKYO, cityLongHashMap.get(City.TOKYO) + 1);
+            } else {
+                cityLongHashMap.put(City.TOKYO, 1l);
+            }
+            return City.TOKYO.toString();
+        } else {
+            if (cityLongHashMap.containsKey(City.LONDON)) {
+                cityLongHashMap.put(City.LONDON, cityLongHashMap.get(City.LONDON) + 1);
+            } else {
+                cityLongHashMap.put(City.LONDON, 1l);
+            }
+            return City.LONDON.toString();
         }
     }
 

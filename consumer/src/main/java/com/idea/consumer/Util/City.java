@@ -2,28 +2,28 @@ package com.idea.consumer.Util;
 
 public enum City {
 
-    ISTANBUL{
+    ISTANBUL {
         @Override
         public String toString() {
             return "Istanbul";
         }
     },
-    TOKYO{
+    TOKYO {
         @Override
         public String toString() {
             return "Tokyo";
         }
-    }, MOSKOW{
+    }, MOSKOW {
         @Override
         public String toString() {
             return "Moskow";
         }
-    },  BEIJING{
+    }, BEIJING {
         @Override
         public String toString() {
             return "Beijing";
         }
-    }, LONDON{
+    }, LONDON {
         @Override
         public String toString() {
             return "London";
