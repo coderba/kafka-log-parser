@@ -21,6 +21,10 @@ public class Sender {
     @Value("${app.topic}")
     private String topic;
 
+    @Value("${app.log.file.location}")
+    private String logFileLocation;
+
+
     public void send(String message) {
         logger.info("sending message='{}' to topic='{}'", message, topic);
         kafkaTemplate.send(topic, message);
@@ -28,22 +32,28 @@ public class Sender {
 
     @PostConstruct
     public void read() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(
-                    "/Users/cembasarbaskan/Desktop/test/log4j2-demo.log"));
-            String line;
 
-            while (true) {
-                line = reader.readLine();
-                if (line == null) {
-                    //do nothing...
-                } else {
-                    send(line);
+        if (logFileLocation == null || logFileLocation.isEmpty()) {
+            logger.error("[read] please enter app.log.file.location on application.properties.");
+        } else {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(
+                        logFileLocation));
+                String line;
+
+                while (true) {
+                    line = reader.readLine();
+                    if (line == null) {
+                        //do nothing...
+                    } else {
+                        send(line);
+                    }
+                    Thread.sleep(2000);
                 }
-                Thread.sleep(2000);
+            } catch (Exception e) {
+                logger.error("[read]", e);
             }
-        } catch (Exception e) {
-            logger.error("[read]", e);
         }
+
     }
 }
