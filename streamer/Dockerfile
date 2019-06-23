@@ -2,4 +2,6 @@ FROM openjdk:10-jre-slim
 ARG JAR_FILE
 ADD target/${JAR_FILE} streamer.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/streamer.jar"]
+ENTRYPOINT ["java","-jar", "/streamer.jar"]
+VOLUME /tmp
+#ENTRYPOINT ["java", "-DlogFileLocation=/tmp", "-jar", "/streamer.jar"]

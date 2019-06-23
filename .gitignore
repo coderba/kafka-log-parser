@@ -27,3 +27,9 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+/docker-compose.yml
+!/docker-compose.yml
+.mvn/
+mvnw
+mvnw.cmd
+src/main/resources/static/

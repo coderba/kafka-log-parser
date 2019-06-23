@@ -10,8 +10,8 @@
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
         <!-- Rolling File Appender -->
-        <RollingFile name="FileAppender" fileName="/Users/cembasarbaskan/Desktop/test/log4j2-demo.log"
-                     filePattern="/Users/cembasarbaskan/Desktop/test/log4j2-demo.log/log4j2-demo-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="FileAppender" fileName="/log4j2-demo.log"
+                     filePattern="/tmp/log4j2-demo-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout>
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>
