@@ -21,6 +21,6 @@
     </modules>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>1.9</java.version>
     </properties>
 </project>

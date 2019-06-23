@@ -12,12 +12,11 @@
         <!-- Rolling File Appender -->
         <RollingFile name="FileAppender" fileName="/log4j2-demo.log"
                      filePattern="/tmp/log4j2-demo.log">
-                     <!--filePattern="/tmp/log4j2-demo-%d{yyyy-MM-dd}-%i.log">-->
             <PatternLayout>
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="2MB"/>
+                <SizeBasedTriggeringPolicy size="20MB"/>
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
