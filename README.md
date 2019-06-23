@@ -11,6 +11,6 @@ We have 3 service
 
 * PS: "home" page runs on localhost:8082/home
 * PS: Needs java 9
-* PS: Please use docker 18.06.0+ version,so docker-compose file uses 3.7 version.
+* PS: Please use docker 18.06.0+ version, so docker-compose file uses 3.7 version.
 
 
