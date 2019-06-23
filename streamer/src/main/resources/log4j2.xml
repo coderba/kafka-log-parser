@@ -16,9 +16,9 @@
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="20MB"/>
+                <SizeBasedTriggeringPolicy size="2MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="10"/>
+            <DefaultRolloverStrategy max="50"/>
         </RollingFile>
     </Appenders>
 
