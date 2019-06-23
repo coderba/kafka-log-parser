@@ -112,19 +112,19 @@
             var socket = new SockJS('/live-incoming-logs');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
-                stompClient.subscribe('/topic/incomingLogs', function (temperature) {
-                    console.log(temperature);
+                stompClient.subscribe('/topic/incomingLogs', function (loggingData) {
+                    console.log(loggingData);
 
-                    //$('#temperature').text(temperature.body);
+                    //$('#loggingData').text(loggingData.body);
                     /* Push new data On X-Axis of Chart */
                     config.data.labels.push(new Date());
                     /* Push new data on Y-Axis of chart */
                     config.data.datasets.forEach(function (dataset) {
-                        //dataset.data.push(temperature.body);
+                        //dataset.data.push(loggingData.body);
 
                         console.log(dataset);
                         var data = dataset.data;
-                        var message = temperature.body;
+                        var message = loggingData.body;
 
                         if (dataset.label == 'Istanbul' && message.includes('Istanbul')) {
 
