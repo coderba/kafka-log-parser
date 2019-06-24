@@ -1,4 +1,11 @@
-version: '3.6'
+version: '3'
+
+networks:
+  service_network:
+    driver: bridge
+
+volumes:
+  app-volume: {}
 
 services:
   zookeeper:
@@ -8,7 +15,7 @@ services:
       - "2181:2181"
     networks:
       - service_network
-
+  
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -104,11 +111,3 @@ services:
       - kafka
       - cassandra
       - producer
-
-networks:
-  service_network:
-    driver: bridge
-    name: service_network
-
-volumes:
-  app-volume: {}
